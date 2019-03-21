@@ -166,7 +166,10 @@
                                     <input type="text" name="email" class="form-control shadow" placeholder="Masukkan Email" autocomplete="off">
                                 </div>                    
                                 <div class="col-sm-8 center">
-                                    <input type="password" name="password" class="form-control shadow" placeholder="Password" autocomplete="off">
+                                    <input id="password1" type="password" name="password" class="form-control shadow" placeholder="Password" autocomplete="off">
+                                </div>
+                                <div class="col-sm-8 center">                                    
+                                    <input type="checkbox" style="float: left;margin-right: 10px" onchange="change(this.checked,1)"> <p style="color: white;text-align: left !important; ">Tampilkan Password</p>
                                 </div>
                                 <div class="col-sm-8 center">
                                     <center><button class="btn btn-success shadow">Login</button></center>
@@ -182,7 +185,10 @@
                                     <input type="text" name="email" class="form-control shadow" placeholder="Masukkan Email" autocomplete="off">
                                 </div>
                                 <div class="col-sm-8 center">
-                                    <input type="password" name="password" class="form-control shadow" placeholder="Password" autocomplete="off">
+                                    <input id="password2" type="password" name="password" class="form-control shadow" placeholder="Password" autocomplete="off">
+                                </div>
+                                <div class="col-sm-8 center">                                    
+                                    <input type="checkbox" style="float: left;margin-right: 10px" onchange="change(this.checked,2)"> <p style="color: white;text-align: left !important; ">Tampilkan Password</p>
                                 </div>
                                 <div class="col-sm-8 center">
                                     <center><button class="btn btn-success shadow">Sign Up</button></center>
@@ -194,28 +200,7 @@
             </div>
         </section>
     </div>
-    <?php endif; ?>
-
-    <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2016 Your Company.
-                </div>
-                <div class="col-sm-6">
-                    <ul class="social-icons">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="#"><i class="fa fa-flickr"></i></a></li>
-                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>        
-    </footer><!--/#footer-->
+    <?php endif; ?>    
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -242,6 +227,15 @@
                 $('#signup-btn').addClass('actived');
                 $('#login-form').hide();
                 $('#signup-form').fadeIn();
+            }
+        }
+
+        function change(input,id){
+            if(input){
+                $('#password'+id).attr('type','text');
+            }
+            else{
+                $('#password'+id).attr('type','password');
             }
         }
     </script>
