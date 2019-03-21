@@ -1,0 +1,41 @@
+/*
+Template Name: HR2 - Template
+Version: 1.0
+Author: HostingRed SAS
+Author URL: http://hostingred.com
+*/
+/*******************************************
+USE THIS FILE TO INCLUDE YOUR OWN CSS STYLES
+********************************************/
+
+.center{
+	left: 50%;transform: translateX(-50%);position: relative;
+	margin: 10px;		
+}
+
+.shadow{
+	-webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5); 
+    box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.hype{
+	padding:0px;
+	border:none;
+	background:none;
+	color: #c0c0c0 !important;
+	font-size: 24px;	
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.actived, .hype:hover{
+	color: white !important;	
+}
+
+.alert{
+	display: none;
+	color: red;
+	font-size: 24px;
+	text-shadow: 2px 2px 4px black;	
+}
