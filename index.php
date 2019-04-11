@@ -9,13 +9,18 @@
         $jum_gejala = mysqli_num_rows($result);
     }
 
-    session_start();
+    $sql = "SELECT id_konsultasi FROM konsultasi";
+    if($result = mysqli_query($conn,$sql)){
+        $jum_konsultasi = mysqli_num_rows($result);
+    }
+    
     if(isset($_SESSION['login'])){
         $login = true;
     }
     else{
         $login = false;
     }    
+    ob_start();
 
 ?>
 <!DOCTYPE html>
@@ -45,6 +50,18 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css">
+        .alert-danger{
+            color:red;
+            background-color: transparent;
+            font-size: 18px;            
+        }
+        .alert-success{
+            color:white;
+            background-color: transparent;
+            font-size: 18px;            
+        }
+    </style>
 </head><!--/head-->
 
 <body id="home" class="homepage">
@@ -69,7 +86,9 @@
                         <li class="scroll"><a href="#animated-number" style="color: white !important">About</a></li>
                         <?php if(!$login): ?>
                         <li class="scroll"><a href="#login" style="color: white !important">Login/Signup</a></li>
-                        <?php endif; ?> 
+                        <?php else: ?>
+                        <li class="scroll"><a href="#logout" style="color: white !important"><?php echo $_SESSION['user']; ?></a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -105,7 +124,7 @@
                     <p style="text-align: justify;">Cabai merah merupakan salah satu komoditas strategis di sektor hortikultura sehingga produksinya perlu ditingkatkan. Namun, penyakit yang menyerang tanaman cabai cukup kompleks, dengan gejala penyakit cukup banyak dan beberapa penyakit yang memiliki gejala yang sama, penanganan dan pengendalian penyakit cabai yang belum benar, menyebabkan petani sulit mendiagnosis penyakit cabai merah dan mengakibatkan tingkat produksi berkurang. Pembentukan sistem pakar diagnosa penyakit cabai merah menjadi salah satu solusi petani untuk mengendalikan penyakit yang terjadi pada tanaman cabai merah. Certainty Factor adalah metode untuk membuktikan apakah suatu fakta pasti atau tidak pasti dalam bentuk metrik yang biasanya digunakan dalam sistem pakar. Berdasarkan masalah untuk mengatasi penyakit tanaman cabai merah, maka perlu dibangun sistem yang terkomputerisasi yang memiliki pengetahuan seperti para ahli botani dan sistem tersebut dapat menjadi alat dalam mendiagnosis jenis penyakit dan memberikan solusi bagaimana menangani dan mengendalikan. Sistem Pakar adalah salah satu bidang pengetahuan yang bisa menjadi alat dalam mengatasi masalah.</p>
                 </div>
                 <div class="col-sm-3 text-right">
-                    <a class="btn btn-success btn-lg">Konsultasi Penyakit</a>
+                    <a href="konsultasi.php?id=1" class="btn btn-success btn-lg">Konsultasi Penyakit</a>
                 </div>
             </div>
         </div>
@@ -133,13 +152,13 @@
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="200ms">
-                        <div class="animated-number" data-digit="94.3%" data-duration="1500"></div>
+                        <div class="animated-number" data-digit="100%" data-duration="1500"></div>
                         <strong>Akurasi</strong>
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <div class="wow fadeInUp" data-wow-duration="400ms" data-wow-delay="300ms">
-                        <div class="animated-number" data-digit="1" data-duration="1500"></div>
+                        <div class="animated-number" data-digit="<?php echo $jum_konsultasi; ?>" data-duration="1500"></div>
                         <strong>Konsultasi</strong>
                     </div>
                 </div>
@@ -152,8 +171,13 @@
         <section id="login" class="wow fadeIn">
             <div class="container"  style="padding-top: 50px;padding-bottom: 100px">
                 <div class="row">
-                    <div class="col-sm-8 center">                        
-                        <center><p class="alert">Password atau Email Salah<p></center>
+                    <div class="col-sm-8 center">
+                        <?php if(isset($_SESSION['alert-danger'])): ?>
+                            <center><p class="alert-danger">Password atau Email Salah<p></center>
+                        <?php unset($_SESSION['alert-danger']); endif; ?>
+                        <?php if(isset($_SESSION['alert-success'])): ?>
+                            <center><p class="alert-success">Registrasi akun berhasil<p></center>
+                        <?php unset($_SESSION['alert-success']); endif; ?>
                         <div class="col-sm-8 center">                            
                             <center>
                                 <button id="login-btn" class="btn hype actived"  onclick="show('login')">Login</button>
@@ -161,7 +185,7 @@
                             </center>
                         </div>
                         <div id="login-form">
-                            <form>
+                            <form method="post">
                                 <div class="col-sm-8 center">
                                     <input type="text" name="email" class="form-control shadow" placeholder="Masukkan Email" autocomplete="off">
                                 </div>                    
@@ -172,12 +196,12 @@
                                     <input type="checkbox" style="float: left;margin-right: 10px" onchange="change(this.checked,1)"> <p style="color: white;text-align: left !important; ">Tampilkan Password</p>
                                 </div>
                                 <div class="col-sm-8 center">
-                                    <center><button class="btn btn-success shadow">Login</button></center>
+                                    <center><button name="login" class="btn btn-success shadow">Login</button></center>
                                 </div>
                             </form>
                         </div>
                         <div id="signup-form" style="display: none;">
-                            <form>
+                            <form method="post">
                                 <div class="col-sm-8 center">
                                     <input type="text" name="nama" class="form-control shadow" placeholder="Masukkan Nama Lengkap" autocomplete="off">
                                 </div>
@@ -191,7 +215,7 @@
                                     <input type="checkbox" style="float: left;margin-right: 10px" onchange="change(this.checked,2)"> <p style="color: white;text-align: left !important; ">Tampilkan Password</p>
                                 </div>
                                 <div class="col-sm-8 center">
-                                    <center><button class="btn btn-success shadow">Sign Up</button></center>
+                                    <center><button name="signup" class="btn btn-success shadow">Sign Up</button></center>
                                 </div>
                             </form>
                         </div>
@@ -200,7 +224,22 @@
             </div>
         </section>
     </div>
-    <?php endif; ?>    
+    <?php else: ?>
+    <div style="background: linear-gradient(to bottom,#52c234 0% ,#061700 100%);height: 100%;width: 100%;">        
+        <section id="logout" class="wow fadeIn">
+            <div class="container"  style="padding-top: 100px;padding-bottom: 250px">
+                <div class="row">
+                    <div class="col-sm-8 center">
+                        <center><p style="color: white;font-size: 24px;"><?php echo $_SESSION['user']; ?></p></center>
+                    </div>
+                    <div class="col-sm-8 center">
+                        <center><button class="btn btn-success">Logout</button></center>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -239,6 +278,43 @@
             }
         }
     </script>
+
+    <?php        
+      if(isset($_POST['login'])){
+        $email = $_POST['email'];
+        $password = $_POST['password'];    
+
+        $sql = "SELECT * FROM user WHERE email = '$email' AND level = 'user'";
+        $query = mysqli_query($conn,$sql);
+        $row  = mysqli_fetch_assoc($query); 
+        $result = password_verify($password,$row['password']);
+        if($result){
+          $_SESSION['login'] = true;
+          $_SESSION['user'] = $row['nama_lengkap'];
+          header('location:index.php');
+        }
+        else
+          $_SESSION['alert-danger'] = true;
+        if(!$_SESSION['login'])
+          header('location:index.php');
+      }
+    ?>
+
+    <?php        
+      if(isset($_POST['signup'])){
+        $nama = $_POST['nama'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $sql = "INSERT INTO user VALUES('','$nama','$email','user','".password_hash($password, PASSWORD_DEFAULT)."')";
+        $query = mysqli_query($conn,$sql);
+        $row  = mysqli_fetch_assoc($query);
+        if($result){
+          $_SESSION['alert-success'] = true;
+          header('location:index.php');
+        }
+      }
+    ?>
 
 </body>
 </html>
