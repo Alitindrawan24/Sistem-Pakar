@@ -89,14 +89,13 @@
                         <br><input type="radio" name="pil" class="radio-inline" value="0" <?php if($temp == 0) echo "checked"; ?> > Tidak Ada
                     </div>
                     <div class="col-sm-4 text-right">
-                        <?php if($id != 1): ?>
+                        <!-- <?php if($id != 1): ?>
                         <a href="konsultasi.php?id=<?php echo $id-1; ?>" class="btn btn-success btn-lg"><i class="fa fa-caret-square-o-left"></i> Prev</a>
-                        <?php endif; ?>
+                        <?php endif; ?> -->
                         <?php if($id != $max['jum']): ?>
-                        <a href="konsultasi.php?id=<?php echo $id+1; ?>" class="btn btn-success btn-lg">Next <i class="fa fa-caret-square-o-right"></i></a>
-                        <?php else: ?>
-                        <a href="hasil.php" class="btn btn-success btn-lg"><i class="fa fa-edit"></i> Hasil</a>
+                        <a href="konsultasi.php?id=<?php echo $id+1; ?>" class="btn btn-success btn-lg">Ada gejala lainnya ? <i class="fa fa-caret-square-o-right"></i></a>
                         <?php endif; ?>
+                        <a href="hasil.php" class="btn btn-success btn-lg"><i class="fa fa-edit"></i> Hasil</a>
                     </div>
                 </div>
             </div>

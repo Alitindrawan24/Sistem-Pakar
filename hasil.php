@@ -8,14 +8,25 @@
     $sql = "SELECT id_penyakit FROM penyakit";
     $query = mysqli_query($conn,$sql);
 
-    while($penyakit = mysqli_fetch_assoc($query)){        
+    while($penyakit = mysqli_fetch_assoc($query)){
 
         $_SESSION['cf'][$penyakit['id_penyakit']] = 0;
         $bef = -1;
 
         for ($i=1; $i <= $max['jum']; $i++) { 
-            $val = $_SESSION['value'][$i];
-            $kode = $_SESSION['id'][$i];
+            if(!isset($_SESSION['value'][$i]))
+                $val = 0;
+            else
+                $val = $_SESSION['value'][$i];
+
+            if(!isset($_SESSION['id'][$i])){
+                if($i > 9)
+                    $kode = "G0".$i;
+                else
+                    $kode = "G".$i;
+            }
+            else
+                $kode = $_SESSION['id'][$i];
             $id_penyakit = $penyakit['id_penyakit'];
 
             $sql = "SELECT count(id_relasi) as jum, relasi.* FROM relasi WHERE gejala_id = '$kode' AND penyakit_id = '$id_penyakit' ";            

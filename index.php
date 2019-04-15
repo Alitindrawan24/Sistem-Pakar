@@ -124,7 +124,11 @@
                     <p style="text-align: justify;">Cabai merah merupakan salah satu komoditas strategis di sektor hortikultura sehingga produksinya perlu ditingkatkan. Namun, penyakit yang menyerang tanaman cabai cukup kompleks, dengan gejala penyakit cukup banyak dan beberapa penyakit yang memiliki gejala yang sama, penanganan dan pengendalian penyakit cabai yang belum benar, menyebabkan petani sulit mendiagnosis penyakit cabai merah dan mengakibatkan tingkat produksi berkurang. Pembentukan sistem pakar diagnosa penyakit cabai merah menjadi salah satu solusi petani untuk mengendalikan penyakit yang terjadi pada tanaman cabai merah. Certainty Factor adalah metode untuk membuktikan apakah suatu fakta pasti atau tidak pasti dalam bentuk metrik yang biasanya digunakan dalam sistem pakar. Berdasarkan masalah untuk mengatasi penyakit tanaman cabai merah, maka perlu dibangun sistem yang terkomputerisasi yang memiliki pengetahuan seperti para ahli botani dan sistem tersebut dapat menjadi alat dalam mendiagnosis jenis penyakit dan memberikan solusi bagaimana menangani dan mengendalikan. Sistem Pakar adalah salah satu bidang pengetahuan yang bisa menjadi alat dalam mengatasi masalah.</p>
                 </div>
                 <div class="col-sm-3 text-right">
+                    <?php if($login): ?>
                     <a href="konsultasi.php?id=1" class="btn btn-success btn-lg">Konsultasi Penyakit</a>
+                    <?php else: ?>
+                    <a onclick="return alert('Silahkan login terlebih dahulu')" class="btn btn-success btn-lg">Konsultasi Penyakit</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -233,7 +237,9 @@
                         <center><p style="color: white;font-size: 24px;"><?php echo $_SESSION['user']; ?></p></center>
                     </div>
                     <div class="col-sm-8 center">
-                        <center><button class="btn btn-success">Logout</button></center>
+                        <form method="post" action="#">
+                            <center><button type="submit" name="logout" class="btn btn-success">Logout</button></center>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -314,6 +320,13 @@
           header('location:index.php');
         }
       }
+    ?>
+
+    <?php
+        if(isset($_POST['logout'])){
+            session_destroy();
+            header('location:index.php');
+        }
     ?>
 
 </body>
